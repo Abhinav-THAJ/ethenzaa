@@ -69,10 +69,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-          <p>&copy; {new Date().getFullYear()} ETHENZAA LOOM FASHION LLP. All rights reserved.</p>
-          <div className="mt-4 md:mt-0 flex space-x-4">
-            <span className="flex items-center gap-1"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Razorpay_logo.svg/1200px-Razorpay_logo.svg.png" alt="Razorpay" className="h-4 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all"/></span>
-          </div>
+          <p>&copy; {new Date().getFullYear()} Empireae. All rights reserved.</p>
         </div>
       </div>
     </footer>

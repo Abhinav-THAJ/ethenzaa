@@ -6,6 +6,10 @@ export async function generateStaticParams() {
     { category: 'men' },
     { category: 'kids' },
     { category: 'plus-size' },
+    { category: 'new-arrivals' },
+    { category: 'new arrivals' },
+    { category: 'best-sellers' },
+    { category: 'offers' },
   ];
 }
 

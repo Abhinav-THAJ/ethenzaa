@@ -5,7 +5,7 @@ export default function Terms() {
       <div className="w-20 h-1 bg-accent mx-auto mb-12"></div>
       
       <div className="prose prose-lg max-w-none text-gray-700 space-y-8">
-        <p>Welcome to ETHENZAA LOOM FASHION LLP. By accessing and using this website, you agree to comply with the following Terms & Conditions.</p>
+        <p>Welcome to Empireae. By accessing and using this website, you agree to comply with the following Terms & Conditions.</p>
 
         <section>
           <h2 className="font-serif text-2xl text-primary mb-4">1. Website Usage</h2>
@@ -19,12 +19,12 @@ export default function Terms() {
 
         <section>
           <h2 className="font-serif text-2xl text-primary mb-4">3. Intellectual Property</h2>
-          <p>All content on this website, including logos, text, graphics, and images, is the property of ETHENZAA LOOM FASHION LLP and is protected by copyright laws.</p>
+          <p>All content on this website, including logos, text, graphics, and images, is the property of Empireae and is protected by copyright laws.</p>
         </section>
 
         <section>
           <h2 className="font-serif text-2xl text-primary mb-4">4. Liability</h2>
-          <p>ETHENZAA LOOM FASHION LLP shall not be liable for any indirect, incidental, or consequential damages arising from the use of our products or website.</p>
+          <p>Empireae shall not be liable for any indirect, incidental, or consequential damages arising from the use of our products or website.</p>
         </section>
       </div>
     </main>

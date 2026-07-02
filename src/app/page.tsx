@@ -53,7 +53,7 @@ export default function Home() {
       {/* SECTION 2: BRAND INTRODUCTION */}
       <section className="py-24 bg-bg-primary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl">
-          <h2 className="font-serif text-4xl text-primary mb-6">Welcome to ETHENZAA LOOM FASHION LLP</h2>
+          <h2 className="font-serif text-4xl text-primary mb-6">Welcome to Empireae</h2>
           <div className="w-20 h-1 bg-accent mx-auto mb-8"></div>
           <p className="text-lg text-gray-600 leading-relaxed mb-10">
             Weaving Style. Inspiring Confidence. As a premium fashion and lifestyle brand, we specialize in bringing you the finest ethnic and contemporary wear. Discover affordable luxury crafted with high-quality fabrics, embracing modern trends while ensuring utmost customer satisfaction.

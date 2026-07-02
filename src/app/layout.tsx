@@ -5,10 +5,10 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 export const metadata: Metadata = {
-  title: 'ETHENZAA LOOM FASHION LLP | Weaving Style. Inspiring Confidence.',
+  title: 'Empireae | Weaving Style. Inspiring Confidence.',
   description: 'Premium Fashion & Lifestyle E-Commerce Brand specializing in ethnic and contemporary fashion for women, men, kids, and plus-size customers.',
   openGraph: {
-    title: 'ETHENZAA LOOM FASHION LLP',
+    title: 'Empireae',
     description: 'Premium Fashion & Lifestyle E-Commerce Brand',
     images: ['/images/ethenzaa_hero.png'],
   }

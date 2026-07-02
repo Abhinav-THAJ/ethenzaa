@@ -19,7 +19,7 @@ export default function Contact() {
                 <div className="bg-bg-secondary p-4 rounded-full text-accent"><MapPin size={24} /></div>
                 <div>
                   <h3 className="font-semibold text-text-main mb-1">Our Studio</h3>
-                  <p className="text-gray-600">ETHENZAA LOOM FASHION LLP<br/>Infopark Phase 2, Kochi<br/>Kerala – 682303, India</p>
+                  <p className="text-gray-600">Empireae<br/>Infopark Phase 2, Kochi<br/>Kerala – 682303, India</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">

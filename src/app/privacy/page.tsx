@@ -5,7 +5,7 @@ export default function PrivacyPolicy() {
       <div className="w-20 h-1 bg-accent mx-auto mb-12"></div>
       
       <div className="prose prose-lg max-w-none text-gray-700 space-y-8">
-        <p>At ETHENZAA LOOM FASHION LLP, your privacy is of paramount importance to us. This Privacy Policy details how we collect, use, and protect your personal information.</p>
+        <p>At Empireae, your privacy is of paramount importance to us. This Privacy Policy details how we collect, use, and protect your personal information.</p>
 
         <section>
           <h2 className="font-serif text-2xl text-primary mb-4">1. Data Collection</h2>
