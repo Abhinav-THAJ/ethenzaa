@@ -31,11 +31,11 @@ export default function Navbar() {
     <>
       <header className="fixed top-0 left-0 right-0 bg-bg-primary/95 backdrop-blur-md border-b border-gray-200 z-[1000]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
+          <div className="flex justify-between items-center h-28">
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center h-full w-40 justify-center">
               <Link href="/" className="flex items-center justify-center">
-                <img src="/images/eth.png" alt="Ethenzaa Logo" className="h-20 w-auto object-contain scale-[1.7] translate-y-2" />
+                <img src="/images/eth.png" alt="Ethenzaa Logo" className="h-20 w-auto object-contain scale-[1.2] translate-y-1" />
               </Link>
             </div>
 
@@ -46,11 +46,11 @@ export default function Navbar() {
               </Link>
               
               {/* Category Dropdown */}
-              <div className="relative group h-20 flex items-center">
+              <div className="relative group h-28 flex items-center">
                 <button className="text-text-main group-hover:text-primary transition-colors text-sm font-medium uppercase tracking-wide flex items-center gap-1">
                   Categories <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
                 </button>
-                <div className="absolute top-20 left-0 w-48 bg-white border border-gray-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-left -translate-y-2 group-hover:translate-y-0">
+                <div className="absolute top-28 left-0 w-48 bg-white border border-gray-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-left -translate-y-2 group-hover:translate-y-0">
                   <div className="py-2">
                     {categories.map((cat) => (
                       <Link key={cat.name} href={cat.path} className="block px-4 py-2 text-sm text-gray-700 hover:bg-bg-secondary hover:text-primary transition-colors">
@@ -62,11 +62,11 @@ export default function Navbar() {
               </div>
 
               {/* Collections Dropdown */}
-              <div className="relative group h-20 flex items-center">
+              <div className="relative group h-28 flex items-center">
                 <button className="text-text-main group-hover:text-primary transition-colors text-sm font-medium uppercase tracking-wide flex items-center gap-1">
                   Collections <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
                 </button>
-                <div className="absolute top-20 left-0 w-48 bg-white border border-gray-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-left -translate-y-2 group-hover:translate-y-0">
+                <div className="absolute top-28 left-0 w-48 bg-white border border-gray-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-left -translate-y-2 group-hover:translate-y-0">
                   <div className="py-2">
                     {collections.map((col) => (
                       <Link key={col.name} href={col.path} className="block px-4 py-2 text-sm text-gray-700 hover:bg-bg-secondary hover:text-primary transition-colors">

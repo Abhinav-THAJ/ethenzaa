@@ -9,7 +9,7 @@ export default function Footer() {
           
           {/* About Company */}
           <div className="space-y-4">
-            <img src="/images/eth.png" alt="Ethenzaa Logo" className="h-32 md:h-40 w-auto object-contain -ml-4" />
+            <img src="/images/eth.png" alt="Ethenzaa Logo" className="h-24 md:h-32 w-auto object-contain -ml-4" />
             <p className="text-gray-600 text-sm leading-relaxed max-w-xs">
               Weaving Style. Inspiring Confidence. Premium Fashion & Lifestyle E-Commerce Brand specializing in ethnic and contemporary fashion.
             </p>

@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className="bg-bg-primary text-text-main">
         <CartProvider>
           <Navbar />
-          <div className="pt-20"> {/* Padding for sticky header */}
+          <div className="pt-28"> {/* Padding for sticky header */}
             {children}
           </div>
           <Footer />
