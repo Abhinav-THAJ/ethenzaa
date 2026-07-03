@@ -29,25 +29,25 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 bg-bg-primary/95 backdrop-blur-md border-b border-gray-200 z-[1000]">
+      <header className="fixed top-0 left-0 right-0 bg-primary shadow-md border-b border-primary/20 z-[1000]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-28">
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center h-full w-40 justify-center">
               <Link href="/" className="flex items-center justify-center">
-                <img src="/images/eth.png" alt="Ethenzaa Logo" className="h-20 w-auto object-contain scale-[1.2] translate-y-1" />
+                <img src="/images/eth.png" alt="Ethenzaa Logo" className="h-20 w-auto object-contain scale-[2.0] translate-y-1" />
               </Link>
             </div>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-8 items-center">
-              <Link href="/" className="text-text-main hover:text-primary transition-colors text-sm font-medium uppercase tracking-wide">
+              <Link href="/" className="text-white/90 hover:text-accent transition-colors text-sm font-medium uppercase tracking-wide">
                 Home
               </Link>
               
               {/* Category Dropdown */}
               <div className="relative group h-28 flex items-center">
-                <button className="text-text-main group-hover:text-primary transition-colors text-sm font-medium uppercase tracking-wide flex items-center gap-1">
+                <button className="text-white/90 group-hover:text-accent transition-colors text-sm font-medium uppercase tracking-wide flex items-center gap-1">
                   Categories <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
                 </button>
                 <div className="absolute top-28 left-0 w-48 bg-white border border-gray-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-left -translate-y-2 group-hover:translate-y-0">
@@ -63,7 +63,7 @@ export default function Navbar() {
 
               {/* Collections Dropdown */}
               <div className="relative group h-28 flex items-center">
-                <button className="text-text-main group-hover:text-primary transition-colors text-sm font-medium uppercase tracking-wide flex items-center gap-1">
+                <button className="text-white/90 group-hover:text-accent transition-colors text-sm font-medium uppercase tracking-wide flex items-center gap-1">
                   Collections <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
                 </button>
                 <div className="absolute top-28 left-0 w-48 bg-white border border-gray-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-left -translate-y-2 group-hover:translate-y-0">
@@ -77,27 +77,27 @@ export default function Navbar() {
                 </div>
               </div>
 
-              <Link href="/about" className="text-text-main hover:text-primary transition-colors text-sm font-medium uppercase tracking-wide">
+              <Link href="/about" className="text-white/90 hover:text-accent transition-colors text-sm font-medium uppercase tracking-wide">
                 About Us
               </Link>
-              <Link href="/contact" className="text-text-main hover:text-primary transition-colors text-sm font-medium uppercase tracking-wide">
+              <Link href="/contact" className="text-white/90 hover:text-accent transition-colors text-sm font-medium uppercase tracking-wide">
                 Contact
               </Link>
             </nav>
 
             {/* Icons */}
             <div className="flex items-center space-x-6">
-              <button className="text-text-main hover:text-primary transition-colors hidden sm:block">
+              <button className="text-white/90 hover:text-accent transition-colors hidden sm:block">
                 <Search size={20} />
               </button>
-              <button className="text-text-main hover:text-primary transition-colors hidden sm:block">
+              <button className="text-white/90 hover:text-accent transition-colors hidden sm:block">
                 <User size={20} />
               </button>
-              <button className="text-text-main hover:text-primary transition-colors hidden sm:block">
+              <button className="text-white/90 hover:text-accent transition-colors hidden sm:block">
                 <Heart size={20} />
               </button>
               <button 
-                className="text-text-main hover:text-primary transition-colors relative"
+                className="text-white/90 hover:text-accent transition-colors relative"
                 onClick={() => setIsCartOpen(true)}
               >
                 <ShoppingBag size={20} />
@@ -108,9 +108,8 @@ export default function Navbar() {
                 )}
               </button>
               
-              {/* Mobile menu button */}
               <button 
-                className="md:hidden text-text-main"
+                className="md:hidden text-white"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               >
                 {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
