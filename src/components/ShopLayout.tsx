@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import SidebarFilter from './SidebarFilter';
 import ProductCard from './ProductCard';
+import { Filter, X } from 'lucide-react';
 
 type Product = {
   id: string;
@@ -16,6 +17,7 @@ type Product = {
 
 export default function ShopLayout({ initialProducts, title }: { initialProducts: Product[], title: string }) {
   const [selectedFilters, setSelectedFilters] = useState<{ [key: string]: string[] }>({});
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const handleFilterChange = (section: string, option: string) => {
     setSelectedFilters(prev => {
@@ -41,6 +43,8 @@ export default function ShopLayout({ initialProducts, title }: { initialProducts
     return true;
   });
 
+  const activeFilterCount = Object.values(selectedFilters).flat().length;
+
   return (
     <main className="pt-24 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[80vh]">
       <div className="text-center mb-16">
@@ -49,21 +53,43 @@ export default function ShopLayout({ initialProducts, title }: { initialProducts
       </div>
       
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
-        <SidebarFilter selectedFilters={selectedFilters} onFilterChange={handleFilterChange} />
+        {/* Sidebar — only visible when toggled */}
+        {isFilterOpen && (
+          <SidebarFilter selectedFilters={selectedFilters} onFilterChange={handleFilterChange} />
+        )}
         
         <div className="flex-1">
           <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
-            <span className="text-sm text-gray-500">Showing {filteredProducts.length} Products</span>
-            <select className="text-sm border border-gray-200 rounded-sm p-2 outline-none focus:border-primary text-gray-700 bg-white">
-              <option>Sort by: Recommended</option>
-              <option>Price: Low to High</option>
-              <option>Price: High to Low</option>
-              <option>Newest Arrivals</option>
-            </select>
+            {/* Filter toggle button */}
+            <button
+              onClick={() => setIsFilterOpen(prev => !prev)}
+              className="flex items-center gap-2 text-sm font-medium text-text-main border border-gray-200 rounded-sm px-4 py-2 hover:border-primary hover:text-primary transition-colors relative"
+            >
+              {isFilterOpen ? <X size={16} /> : <Filter size={16} />}
+              {isFilterOpen ? 'Close Filters' : 'Filters'}
+              {!isFilterOpen && activeFilterCount > 0 && (
+                <span className="ml-1 bg-primary text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                  {activeFilterCount}
+                </span>
+              )}
+            </button>
+
+            <div className="flex items-center gap-4">
+              <select className="text-sm border border-gray-200 rounded-sm p-2 outline-none focus:border-primary text-gray-700 bg-white">
+                <option>Sort by: Recommended</option>
+                <option>Price: Low to High</option>
+                <option>Price: High to Low</option>
+                <option>Newest Arrivals</option>
+              </select>
+            </div>
           </div>
           
           {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
+            <div className={`grid gap-6 ${
+              isFilterOpen
+                ? 'grid-cols-2 lg:grid-cols-2 xl:grid-cols-3'
+                : 'grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+            }`}>
               {filteredProducts.map(product => (
                 <ProductCard key={product.id} product={product} />
               ))}

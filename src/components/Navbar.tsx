@@ -35,7 +35,7 @@ export default function Navbar() {
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center h-full w-40 justify-center">
               <Link href="/" className="flex items-center justify-center">
-                <img src="/images/eth.png" alt="Ethenzaa Logo" className="h-20 w-auto object-contain scale-[2] -translate-y-1.5" />
+                <img src="/images/eth.png" alt="Ethenzaa Logo" className="h-20 w-auto object-contain scale-[1.7] translate-y-2" />
               </Link>
             </div>
 
