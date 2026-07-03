@@ -54,22 +54,25 @@ export default function Footer() {
             <ul className="space-y-4 text-sm mb-8">
               <li className="flex items-start space-x-3">
                 <MapPin size={18} className="text-accent flex-shrink-0 mt-1" />
-                <span>Infopark Phase 2, Kochi, Kerala – 682303</span>
+                <span>Ethenzaa Loom Fashion LLP<br/>Nandanam, Chaluvila, Kannamba<br/>Varkala, Thiruvananthapuram<br/>Kerala – 695141</span>
               </li>
               <li className="flex items-center space-x-3">
                 <Phone size={18} className="text-accent flex-shrink-0" />
-                <span>+91 9847 XXXXXXX</span>
+                <div>
+                  <a href="tel:+919447066273" className="block hover:text-accent transition-colors">+91 94470 66273</a>
+                  <a href="tel:+917306419243" className="block hover:text-accent transition-colors">+91 73064 19243</a>
+                </div>
               </li>
               <li className="flex items-center space-x-3">
                 <Mail size={18} className="text-accent flex-shrink-0" />
-                <span>info@ethenzaa.com</span>
+                <a href="mailto:Ethenzaaloomfashion@gmail.com" className="hover:text-accent transition-colors">Ethenzaaloomfashion@gmail.com</a>
               </li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-          <p>&copy; {new Date().getFullYear()} Empireae. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Ethenzaa. All rights reserved.</p>
         </div>
       </div>
     </footer>

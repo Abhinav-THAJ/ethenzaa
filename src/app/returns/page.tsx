@@ -5,7 +5,7 @@ export default function Returns() {
       <div className="w-20 h-1 bg-accent mx-auto mb-12"></div>
       
       <div className="prose prose-lg max-w-none text-gray-700 space-y-8">
-        <p>At Empireae, we want you to be completely satisfied with your purchase. If you are not, we are here to help.</p>
+        <p>At Ethenzaa, we want you to be completely satisfied with your purchase. If you are not, we are here to help.</p>
 
         <section>
           <h2 className="font-serif text-2xl text-primary mb-4">Return Period</h2>

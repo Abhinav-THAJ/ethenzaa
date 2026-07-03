@@ -8,7 +8,7 @@ export default function About() {
         <section>
           <h2 className="font-serif text-2xl text-primary mb-4">Our Story</h2>
           <p>
-            At Empireae, we believe that fashion is more than just clothing—it's a statement of confidence, heritage, and modern expression. We started our journey with a simple vision: to bring premium quality ethnic and contemporary wear to everyone who appreciates fine craftsmanship and elegant design.
+            At Ethenzaa, we believe that fashion is more than just clothing—it's a statement of confidence, heritage, and modern expression. We started our journey with a simple vision: to bring premium quality ethnic and contemporary wear to everyone who appreciates fine craftsmanship and elegant design.
           </p>
         </section>
 

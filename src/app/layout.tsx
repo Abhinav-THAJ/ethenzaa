@@ -5,10 +5,10 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 export const metadata: Metadata = {
-  title: 'Empireae | Weaving Style. Inspiring Confidence.',
+  title: 'Ethenzaa | Weaving Style. Inspiring Confidence.',
   description: 'Premium Fashion & Lifestyle E-Commerce Brand specializing in ethnic and contemporary fashion for women, men, kids, and plus-size customers.',
   openGraph: {
-    title: 'Empireae',
+    title: 'Ethenzaa',
     description: 'Premium Fashion & Lifestyle E-Commerce Brand',
     images: ['/images/ethenzaa_hero.png'],
   }
@@ -31,7 +31,7 @@ export default function RootLayout({
           
           {/* WhatsApp Floating Button */}
           <a 
-            href="https://wa.me/919847000000" 
+            href="https://wa.me/918089076273" 
             target="_blank" 
             rel="noopener noreferrer"
             className="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform z-50 flex items-center justify-center"

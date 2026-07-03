@@ -1,4 +1,4 @@
-import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { MapPin, Phone, Mail, MessageCircle } from 'lucide-react';
 
 export default function Contact() {
   return (
@@ -19,28 +19,29 @@ export default function Contact() {
                 <div className="bg-bg-secondary p-4 rounded-full text-accent"><MapPin size={24} /></div>
                 <div>
                   <h3 className="font-semibold text-text-main mb-1">Our Studio</h3>
-                  <p className="text-gray-600">Empireae<br/>Infopark Phase 2, Kochi<br/>Kerala – 682303, India</p>
+                  <p className="text-gray-600">Ethenzaa Loom Fashion LLP<br/>Nandanam, Chaluvila, Kannamba<br/>Varkala, Thiruvananthapuram<br/>Kerala – 695141, India</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="bg-bg-secondary p-4 rounded-full text-accent"><MessageCircle size={24} /></div>
+                <div>
+                  <h3 className="font-semibold text-text-main mb-1">WhatsApp</h3>
+                  <a href="https://wa.me/918089076273" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-primary transition-colors">+91 80890 76273</a>
                 </div>
               </div>
               <div className="flex items-start gap-4">
                 <div className="bg-bg-secondary p-4 rounded-full text-accent"><Phone size={24} /></div>
                 <div>
-                  <h3 className="font-semibold text-text-main mb-1">Phone & WhatsApp</h3>
-                  <p className="text-gray-600">+91 9847 XXXXXXX</p>
+                  <h3 className="font-semibold text-text-main mb-1">Call Us</h3>
+                  <a href="tel:+919447066273" className="block text-gray-600 hover:text-primary transition-colors">+91 94470 66273</a>
+                  <a href="tel:+917306419243" className="block text-gray-600 hover:text-primary transition-colors">+91 73064 19243</a>
                 </div>
               </div>
               <div className="flex items-start gap-4">
                 <div className="bg-bg-secondary p-4 rounded-full text-accent"><Mail size={24} /></div>
                 <div>
                   <h3 className="font-semibold text-text-main mb-1">Email</h3>
-                  <p className="text-gray-600">support@ethenzaa.com</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="bg-bg-secondary p-4 rounded-full text-accent"><Clock size={24} /></div>
-                <div>
-                  <h3 className="font-semibold text-text-main mb-1">Working Hours</h3>
-                  <p className="text-gray-600">Monday - Saturday: 10:00 AM - 7:00 PM<br/>Sunday: Closed</p>
+                  <a href="mailto:Ethenzaaloomfashion@gmail.com" className="text-gray-600 hover:text-primary transition-colors">Ethenzaaloomfashion@gmail.com</a>
                 </div>
               </div>
             </div>

@@ -29,7 +29,7 @@ export default function Checkout() {
         <CheckCircle2 size={80} className="text-green-500 mb-6" />
         <h1 className="font-serif text-4xl text-primary mb-4">Payment Successful!</h1>
         <p className="text-gray-600 mb-10 text-lg max-w-lg">
-          Thank you for your purchase from Empireae. Your luxury items will be processed and shipped shortly.
+          Thank you for your purchase from Ethenzaa. Your luxury items will be processed and shipped shortly.
         </p>
         <Link href="/" className="bg-primary text-white px-8 py-4 uppercase tracking-widest text-sm font-bold hover:bg-btn-hover transition-colors rounded-sm">
           Continue Shopping
