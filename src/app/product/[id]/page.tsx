@@ -3,13 +3,14 @@ import Link from 'next/link';
 import { Star, Truck, ShieldCheck, ArrowLeft } from 'lucide-react';
 import ProductActionButtons from './ProductActionButtons';
 
-import { fetchWooCommerceProducts, fetchWooCommerceProduct } from '../../../lib/woocommerce';
+import { fetchWooCommerceProduct } from '../../../lib/woocommerce';
 
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+
+// Return empty array — pages are rendered on-demand at request time
 export async function generateStaticParams() {
-  const products = await fetchWooCommerceProducts();
-  return products.map((product: any) => ({
-    id: product.id.toString(),
-  }));
+  return [];
 }
 
 export default async function ProductPage(props: { params: Promise<{ id: string }> }) {
