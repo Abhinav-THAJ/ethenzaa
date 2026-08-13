@@ -3,31 +3,23 @@ import Link from 'next/link';
 import { Star, Truck, ShieldCheck, ArrowLeft } from 'lucide-react';
 import ProductActionButtons from './ProductActionButtons';
 
+import { fetchWooCommerceProducts, fetchWooCommerceProduct } from '../../../lib/woocommerce';
+
 export async function generateStaticParams() {
-  return [
-    { id: '1' },
-    { id: '2' },
-    { id: '3' },
-    { id: '4' },
-    { id: '5' },
-    { id: '6' },
-  ];
+  const products = await fetchWooCommerceProducts();
+  return products.map((product: any) => ({
+    id: product.id.toString(),
+  }));
 }
 
 export default async function ProductPage(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   
-  // Mock product database
-  const allProducts = [
-    { id: '1', name: 'Premium Burgundy Silk Saree', price: 12999, image: '/images/ethenzaa_women.png', category: 'Women', type: 'Sarees', color: 'Burgundy', desc: 'Experience luxury with this premium burgundy silk saree, featuring intricate zari weaving and a rich border. Perfect for festive occasions and weddings.' },
-    { id: '2', name: 'Contemporary Men Kurta Set', price: 8499, image: '/images/ethenzaa_men.png', category: 'Men', type: 'Ethnic Wear', color: 'Midnight Black', desc: 'A sophisticated contemporary kurta set crafted from fine cotton silk. Tailored for comfort without compromising on traditional elegance.' },
-    { id: '3', name: 'Luxury Zari Woven Lehenga', price: 18999, image: '/images/ethenzaa_hero.png', category: 'Women', type: 'Dresses', color: 'Champagne Gold', desc: 'Make a statement in this luxury zari woven lehenga. The exquisite craftsmanship and champagne gold accents create a truly royal look.' },
-    { id: '4', name: 'Classic Bandhgala Suit', price: 15499, image: '/images/ethenzaa_men.png', category: 'Men', type: 'Ethnic Wear', color: 'Midnight Black', desc: 'Redefine classic menswear with this impeccably tailored bandhgala suit. Features a structured silhouette and premium suiting fabric.' },
-    { id: '5', name: 'Festive Kids Sherwani', price: 4999, image: '/images/ethenzaa_hero.png', category: 'Kids', type: 'Ethnic Wear', color: 'Burgundy', desc: 'Dress your little one in style with this festive sherwani set. Lightweight, comfortable, and beautifully detailed.' },
-    { id: '6', name: 'Plus Size Elegant Kurti', price: 3499, image: '/images/ethenzaa_women.png', category: 'Plus Size', type: 'Kurtis', color: 'Ivory White', desc: 'An elegant and comfortable kurti designed to flatter every curve. Features subtle embroidery and a breathable fabric blend.' },
-  ];
+  const product = await fetchWooCommerceProduct(params.id);
 
-  const product = allProducts.find(p => p.id === params.id) || allProducts[0];
+  if (!product) {
+    return <div className="pt-32 text-center text-2xl">Product not found</div>;
+  }
 
   return (
     <main className="pt-24 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
