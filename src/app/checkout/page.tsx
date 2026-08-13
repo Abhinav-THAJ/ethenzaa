@@ -4,23 +4,64 @@ import { useCart } from '../../context/CartContext';
 import { useState } from 'react';
 import Link from 'next/link';
 import { CheckCircle2 } from 'lucide-react';
+import Script from 'next/script';
 
 export default function Checkout() {
   const { cart, cartTotal, clearCart } = useCart();
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  
+  const shippingFee = cartTotal > 0 && cartTotal < 999 ? 99 : 0;
+  const finalAmount = cartTotal + shippingFee;
 
-  const handleCheckout = (e: React.FormEvent) => {
+  const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsProcessing(true);
     
-    // MOCK RAZORPAY INTEGRATION
-    setTimeout(() => {
-      // Simulate Razorpay popup opening and closing
+    try {
+      const response = await fetch('/api/razorpay', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: finalAmount,
+          receipt: `rcpt_checkout_${Date.now()}`,
+        })
+      });
+      
+      const order = await response.json();
+      
+      if (order.error) {
+        throw new Error(order.error);
+      }
+
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: order.amount,
+        currency: order.currency,
+        name: "Ethenzaa",
+        description: `Purchase of ${cart.length} items`,
+        order_id: order.id,
+        handler: function (response: any) {
+            setIsProcessing(false);
+            setIsSuccess(true);
+            clearCart();
+        },
+        theme: {
+            color: "#800020"
+        }
+      };
+      
+      const rzp = new (window as any).Razorpay(options);
+      rzp.on('payment.failed', function (response: any){
+              alert("Payment failed: " + response.error.description);
+              setIsProcessing(false);
+      });
+      rzp.open();
+    } catch (error) {
+      console.error(error);
+      alert("Failed to initialize payment. Please make sure Razorpay keys are set.");
       setIsProcessing(false);
-      setIsSuccess(true);
-      clearCart();
-    }, 2000);
+    }
   };
 
   if (isSuccess) {
@@ -39,8 +80,10 @@ export default function Checkout() {
   }
 
   return (
-    <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-[80vh]">
-      <div className="text-center mb-12">
+    <>
+      <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
+      <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-[80vh]">
+        <div className="text-center mb-12">
         <h1 className="font-serif text-4xl text-primary mb-4">Secure Checkout</h1>
         <div className="w-16 h-1 bg-accent mx-auto"></div>
       </div>
@@ -89,7 +132,7 @@ export default function Checkout() {
               className={`w-full bg-primary text-white py-4 font-bold uppercase tracking-widest text-sm rounded-sm transition-colors ${isProcessing || cart.length === 0 ? 'opacity-70 cursor-not-allowed' : 'hover:bg-btn-hover shadow-lg'}`}
               disabled={isProcessing || cart.length === 0}
             >
-              {isProcessing ? 'Connecting to Razorpay...' : `Pay ₹${cartTotal.toLocaleString('en-IN')} Securely`}
+              {isProcessing ? 'Connecting to Razorpay...' : `Pay ₹${finalAmount.toLocaleString('en-IN')} Securely`}
             </button>
           </form>
         </div>
@@ -129,14 +172,15 @@ export default function Checkout() {
                   </div>
                   <div className="flex justify-between font-serif text-xl text-primary pt-4 border-t border-gray-300 mt-4">
                     <span>Total</span>
-                    <span>₹{(cartTotal + (cartTotal > 0 && cartTotal < 999 ? 99 : 0)).toLocaleString('en-IN')}</span>
+                    <span>₹{finalAmount.toLocaleString('en-IN')}</span>
                   </div>
                 </div>
               </>
             )}
           </div>
         </div>
-      </div>
-    </main>
+        </div>
+      </main>
+    </>
   );
 }

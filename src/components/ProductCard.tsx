@@ -12,9 +12,11 @@ interface ProductCardProps {
 }
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function ProductCard({ product, badge, oldPrice, stockStatus }: ProductCardProps) {
   const { addToCart } = useCart();
+  const router = useRouter();
 
   return (
     <div className="group relative bg-white border border-gray-100 rounded-lg overflow-hidden transition-all duration-500 hover:shadow-xl hover:border-accent">
@@ -51,6 +53,7 @@ export default function ProductCard({ product, badge, oldPrice, stockStatus }: P
             onClick={(e) => {
               e.preventDefault();
               addToCart(product);
+              router.push('/checkout');
             }}
           >
             <ShoppingBag size={16} /> Add to Cart
