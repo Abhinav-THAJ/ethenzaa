@@ -31,7 +31,7 @@ export default function Checkout() {
       const order = await response.json();
       
       if (order.error) {
-        throw new Error(order.error);
+        throw new Error(`${order.error}: ${order.details || 'Unknown error'}`);
       }
 
       const options = {
@@ -51,15 +51,18 @@ export default function Checkout() {
         }
       };
       
+      if (!(window as any).Razorpay) {
+        throw new Error("Razorpay SDK not loaded. Please wait a moment and try again.");
+      }
       const rzp = new (window as any).Razorpay(options);
       rzp.on('payment.failed', function (response: any){
               alert("Payment failed: " + response.error.description);
               setIsProcessing(false);
       });
       rzp.open();
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      alert("Failed to initialize payment. Please make sure Razorpay keys are set.");
+      alert(error.message || "Failed to initialize payment. Please make sure Razorpay keys are set.");
       setIsProcessing(false);
     }
   };
@@ -81,7 +84,7 @@ export default function Checkout() {
 
   return (
     <>
-      <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
+      <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="afterInteractive" />
       <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-[80vh]">
         <div className="text-center mb-12">
         <h1 className="font-serif text-4xl text-primary mb-4">Secure Checkout</h1>
@@ -129,8 +132,8 @@ export default function Checkout() {
             
             <button 
               type="submit" 
-              className={`w-full bg-primary text-white py-4 font-bold uppercase tracking-widest text-sm rounded-sm transition-colors ${isProcessing || cart.length === 0 ? 'opacity-70 cursor-not-allowed' : 'hover:bg-btn-hover shadow-lg'}`}
-              disabled={isProcessing || cart.length === 0}
+              className={`w-full bg-primary text-white py-4 font-bold uppercase tracking-widest text-sm rounded-sm transition-colors ${isProcessing || cart.length === 0 || finalAmount <= 0 ? 'opacity-70 cursor-not-allowed' : 'hover:bg-btn-hover shadow-lg'}`}
+              disabled={isProcessing || cart.length === 0 || finalAmount <= 0}
             >
               {isProcessing ? 'Connecting to Razorpay...' : `Pay ₹${finalAmount.toLocaleString('en-IN')} Securely`}
             </button>

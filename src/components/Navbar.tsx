@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ShoppingBag, User, Heart, Search, Menu, X, ChevronDown } from 'lucide-react';
 
-export default function Navbar() {
+export default function Navbar({ categories = [] }: { categories?: { name: string, path: string }[] }) {
   const { cartCount, setIsCartOpen } = useCart();
   const [mounted, setMounted] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -14,12 +14,11 @@ export default function Navbar() {
 
   useEffect(() => setMounted(true), []);
 
-  const categories = [
-    { name: 'Women', path: '/products/women' },
-    { name: 'Men', path: '/products/men' },
-    { name: 'Kids', path: '/products/kids' },
-    { name: 'Plus Size', path: '/products/plus-size' },
+  const defaultCategories = [
+    { name: 'Shop All', path: '/products' }
   ];
+
+  const displayCategories = categories.length > 0 ? categories : defaultCategories;
 
   const collections = [
     { name: 'New Arrivals', path: '/products/new-arrivals' },
@@ -52,7 +51,7 @@ export default function Navbar() {
                 </button>
                 <div className="absolute top-28 left-0 w-48 bg-white border border-gray-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-left -translate-y-2 group-hover:translate-y-0">
                   <div className="py-2">
-                    {categories.map((cat) => (
+                    {displayCategories.map((cat) => (
                       <Link key={cat.name} href={cat.path} className="block px-4 py-2 text-sm text-gray-700 hover:bg-bg-secondary hover:text-primary transition-colors">
                         {cat.name}
                       </Link>
@@ -133,7 +132,7 @@ export default function Navbar() {
                 </button>
                 {isCategoryOpen && (
                   <div className="pl-6 space-y-1 bg-gray-50 py-2">
-                    {categories.map((cat) => (
+                    {displayCategories.map((cat) => (
                       <Link key={cat.name} href={cat.path} className="block px-3 py-2 text-sm font-medium text-gray-600 hover:text-primary" onClick={() => setIsMobileMenuOpen(false)}>
                         {cat.name}
                       </Link>

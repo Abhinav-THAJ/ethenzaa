@@ -32,9 +32,9 @@ export default function ShopLayout({ initialProducts, title }: { initialProducts
 
   // Filter logic
   const filteredProducts = initialProducts.filter(product => {
-    // Check 'Category' filter (which maps to product.type in our mock data)
+    // Check 'Category' filter
     if (selectedFilters['Category']?.length > 0) {
-      if (!product.type || !selectedFilters['Category'].includes(product.type)) return false;
+      if (!product.category || !selectedFilters['Category'].includes(product.category)) return false;
     }
     // Check 'Color' filter
     if (selectedFilters['Color']?.length > 0) {
@@ -52,10 +52,16 @@ export default function ShopLayout({ initialProducts, title }: { initialProducts
         <div className="w-20 h-1 bg-accent mx-auto"></div>
       </div>
       
+      {/* Sidebar — only visible when toggled */}
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
-        {/* Sidebar — only visible when toggled */}
         {isFilterOpen && (
-          <SidebarFilter selectedFilters={selectedFilters} onFilterChange={handleFilterChange} />
+          <SidebarFilter 
+            selectedFilters={selectedFilters} 
+            onFilterChange={handleFilterChange} 
+            availableCategories={Array.from(new Set(initialProducts.map(p => p.category)))
+              .filter(Boolean)
+              .filter(c => c.toLowerCase() !== 'uncategorized')}
+          />
         )}
         
         <div className="flex-1">

@@ -1,25 +1,19 @@
-"use client";
-
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import ProductCard from '../components/ProductCard';
+import HeroContent from '../components/HeroContent';
+import { fetchWooCommerceProducts } from '../lib/woocommerce';
 import { ArrowRight, Truck, ShieldCheck, RefreshCw, Headphones, Star, Heart } from 'lucide-react';
 
-export default function Home() {
-  const categories = [
-    { name: "Women's Collection", image: '/images/ethenzaa_women.png', link: '/products/women' },
-    { name: "Men's Collection", image: '/images/ethenzaa_men.png', link: '/products/men' },
-    { name: "Kids Collection", image: '/images/ethenzaa_hero.png', link: '/products/kids' },
-    { name: "Plus Size", image: '/images/ethenzaa_women.png', link: '/products/plus-size' },
-  ];
-
-  const dummyProducts = [
-    { id: '1', name: 'Premium Burgundy Silk Saree', price: 12999, image: '/images/ethenzaa_women.png', category: 'Women' },
-    { id: '2', name: 'Contemporary Men Kurta Set', price: 8499, image: '/images/ethenzaa_men.png', category: 'Men' },
-    { id: '3', name: 'Luxury Zari Woven Lehenga', price: 18999, image: '/images/ethenzaa_hero.png', category: 'Women' },
-    { id: '4', name: 'Classic Bandhgala Suit', price: 15499, image: '/images/ethenzaa_men.png', category: 'Men' },
-  ];
+export default async function Home() {
+  const products = await fetchWooCommerceProducts();
+  
+  const uniqueCategories = Array.from(new Set(products.map(p => p.category))).filter(Boolean);
+  const categories = uniqueCategories.map(cat => ({
+    name: cat,
+    image: products.find(p => p.category === cat)?.image || '/images/ethenzaa_women.png',
+    link: `/products/${cat.toLowerCase().replace(/\\s+/g, '-')}`
+  }));
 
   const features = [
     { icon: <ShieldCheck size={32} />, title: 'Premium Quality', desc: 'Highest grade fabrics' },
@@ -35,18 +29,7 @@ export default function Home() {
         <Image src="/images/ethenzaa_hero.png" alt="Ethenzaa Hero" fill className="object-cover object-[center_35%]" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-start text-white">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <h1 className="font-serif text-5xl md:text-7xl leading-tight mb-6 max-w-3xl">
-              Discover Fashion<br/> <span className="text-accent">That Defines You</span>
-            </h1>
-            <p className="text-lg md:text-xl font-light mb-10 max-w-2xl text-gray-200">
-              Premium Ethnic & Contemporary Wear Designed For Style, Comfort, And Confidence.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link href="/products/women" className="bg-primary hover:bg-btn-hover text-white px-8 py-4 uppercase tracking-widest text-sm font-semibold transition-all">Shop Women</Link>
-              <Link href="/products/new-arrivals" className="bg-white/10 backdrop-blur-sm border border-white/30 hover:bg-white hover:text-black text-white px-8 py-4 uppercase tracking-widest text-sm font-semibold transition-all">New Arrivals</Link>
-            </div>
-          </motion.div>
+          <HeroContent />
         </div>
       </section>
 
@@ -99,7 +82,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {dummyProducts.map(p => <ProductCard key={p.id} product={p} badge="NEW" />)}
+            {products.slice(0, 4).map(p => <ProductCard key={p.id} product={p} badge="NEW" />)}
           </div>
         </div>
       </section>
@@ -112,7 +95,7 @@ export default function Home() {
             <p className="text-gray-500 uppercase tracking-widest text-sm">Our most loved masterpieces</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {dummyProducts.slice().reverse().map(p => <ProductCard key={p.id} product={p} badge="BESTSELLER" />)}
+            {products.slice(0, 4).reverse().map(p => <ProductCard key={p.id} product={p} badge="BESTSELLER" />)}
           </div>
         </div>
       </section>

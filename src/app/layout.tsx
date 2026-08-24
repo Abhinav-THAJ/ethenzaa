@@ -14,16 +14,25 @@ export const metadata: Metadata = {
   }
 };
 
-export default function RootLayout({
+import { fetchWooCommerceProducts } from '../lib/woocommerce';
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const products = await fetchWooCommerceProducts();
+  const uniqueCategories = Array.from(new Set(products.map(p => p.category))).filter(Boolean);
+  const categories = uniqueCategories.map(cat => ({
+    name: cat,
+    path: `/products/${cat.toLowerCase().replace(/\s+/g, '-')}`
+  }));
+
   return (
     <html lang="en">
       <body className="bg-bg-primary text-text-main">
         <CartProvider>
-          <Navbar />
+          <Navbar categories={categories} />
           <div className="pt-28"> {/* Padding for sticky header */}
             {children}
           </div>

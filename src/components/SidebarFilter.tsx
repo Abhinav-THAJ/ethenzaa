@@ -5,9 +5,10 @@ import { ChevronDown, ChevronUp, Filter } from 'lucide-react';
 type SidebarFilterProps = {
   selectedFilters?: { [key: string]: string[] };
   onFilterChange?: (section: string, option: string) => void;
+  availableCategories?: string[];
 };
 
-export default function SidebarFilter({ selectedFilters = {}, onFilterChange }: SidebarFilterProps) {
+export default function SidebarFilter({ selectedFilters = {}, onFilterChange, availableCategories = [] }: SidebarFilterProps) {
   const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({
     'Category': true,
     'Size': true,
@@ -23,7 +24,7 @@ export default function SidebarFilter({ selectedFilters = {}, onFilterChange }: 
   const filterSections = [
     {
       title: 'Category',
-      options: ['Sarees', 'Kurtis', 'Co-ord Sets', 'Dresses', 'Shirts', 'Ethnic Wear']
+      options: availableCategories.length > 0 ? availableCategories : ['Sarees', 'Kurtis', 'Co-ord Sets', 'Dresses', 'Shirts', 'Ethnic Wear']
     },
     {
       title: 'Size',

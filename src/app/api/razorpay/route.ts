@@ -9,6 +9,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Razorpay keys are not configured' }, { status: 500 });
     }
 
+    if (!amount || amount <= 0) {
+      return NextResponse.json({ error: 'Invalid order amount', details: 'Order amount must be greater than 0.' }, { status: 400 });
+    }
+
     // Instantiate inside handler so it only runs at request time, not at build time
     const razorpay = new Razorpay({
       key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
@@ -26,8 +30,9 @@ export async function POST(req: Request) {
     return NextResponse.json(order);
   } catch (error: any) {
     console.error('Error creating Razorpay order:', error);
+    const errorMessage = error.error?.description || error.message || JSON.stringify(error);
     return NextResponse.json(
-      { error: 'Error creating Razorpay order', details: error.message },
+      { error: 'Error creating Razorpay order', details: errorMessage },
       { status: 500 }
     );
   }

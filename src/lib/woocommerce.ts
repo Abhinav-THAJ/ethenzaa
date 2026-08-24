@@ -4,8 +4,8 @@ export async function fetchWooCommerceProducts() {
   const WC_CONSUMER_SECRET = process.env.WC_CONSUMER_SECRET;
 
   if (!WC_URL || !WC_CONSUMER_KEY || !WC_CONSUMER_SECRET) {
-    console.warn("WooCommerce environment variables are not set. Returning mock products.");
-    return getMockProducts();
+    console.warn("WooCommerce environment variables are not set.");
+    return [];
   }
 
   try {
@@ -48,7 +48,7 @@ export async function fetchWooCommerceProducts() {
     });
   } catch (error) {
     console.error("Error fetching WooCommerce products:", error);
-    return getMockProducts();
+    return [];
   }
 }
 
@@ -58,7 +58,7 @@ export async function fetchWooCommerceProduct(id: string) {
   const WC_CONSUMER_SECRET = process.env.WC_CONSUMER_SECRET;
 
   if (!WC_URL || !WC_CONSUMER_KEY || !WC_CONSUMER_SECRET) {
-    return getMockProducts().find(p => p.id === id) || null;
+    return null;
   }
 
   try {
@@ -75,7 +75,8 @@ export async function fetchWooCommerceProduct(id: string) {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch WooCommerce product: ${response.statusText}`);
+      console.warn(`WooCommerce product ${id} not found (${response.status})`);
+      return null;
     }
 
     const product = await response.json();
@@ -97,18 +98,8 @@ export async function fetchWooCommerceProduct(id: string) {
     };
   } catch (error) {
     console.error("Error fetching WooCommerce product:", error);
-    return getMockProducts().find(p => p.id === id) || null;
+    return null;
   }
 }
 
-// Fallback mock data when API is not configured
-function getMockProducts() {
-  return [
-    { id: '1', name: 'Premium Burgundy Silk Saree', price: 12999, image: '/images/ethenzaa_women.png', category: 'Women', type: 'Sarees', color: 'Burgundy', desc: 'Experience luxury with this premium burgundy silk saree, featuring intricate zari weaving and a rich border. Perfect for festive occasions and weddings.' },
-    { id: '2', name: 'Contemporary Men Kurta Set', price: 8499, image: '/images/ethenzaa_men.png', category: 'Men', type: 'Ethnic Wear', color: 'Midnight Black', desc: 'A sophisticated contemporary kurta set crafted from fine cotton silk. Tailored for comfort without compromising on traditional elegance.' },
-    { id: '3', name: 'Luxury Zari Woven Lehenga', price: 18999, image: '/images/ethenzaa_hero.png', category: 'Women', type: 'Dresses', color: 'Champagne Gold', desc: 'Make a statement in this luxury zari woven lehenga. The exquisite craftsmanship and champagne gold accents create a truly royal look.' },
-    { id: '4', name: 'Classic Bandhgala Suit', price: 15499, image: '/images/ethenzaa_men.png', category: 'Men', type: 'Ethnic Wear', color: 'Midnight Black', desc: 'Redefine classic menswear with this impeccably tailored bandhgala suit. Features a structured silhouette and premium suiting fabric.' },
-    { id: '5', name: 'Festive Kids Sherwani', price: 4999, image: '/images/ethenzaa_hero.png', category: 'Kids', type: 'Ethnic Wear', color: 'Burgundy', desc: 'Dress your little one in style with this festive sherwani set. Lightweight, comfortable, and beautifully detailed.' },
-    { id: '6', name: 'Plus Size Elegant Kurti', price: 3499, image: '/images/ethenzaa_women.png', category: 'Plus Size', type: 'Kurtis', color: 'Ivory White', desc: 'An elegant and comfortable kurti designed to flatter every curve. Features subtle embroidery and a breathable fabric blend.' },
-  ];
-}
+
