@@ -8,10 +8,10 @@ import { ArrowRight, Truck, ShieldCheck, RefreshCw, Headphones, Star, Heart } fr
 export default async function Home() {
   const products = await fetchWooCommerceProducts();
   
-  const uniqueCategories = Array.from(new Set(products.map(p => p.category))).filter(Boolean);
+  const uniqueCategories = Array.from(new Set(products.map((p: any) => p.category))).filter(Boolean) as string[];
   const categories = uniqueCategories.map(cat => ({
     name: cat,
-    image: products.find(p => p.category === cat)?.image || '/images/ethenzaa_women.png',
+    image: products.find((p: any) => p.category === cat)?.image || '/images/ethenzaa_women.png',
     link: `/products/${cat.toLowerCase().replace(/\\s+/g, '-')}`
   }));
 
@@ -82,7 +82,7 @@ export default async function Home() {
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {products.slice(0, 4).map(p => <ProductCard key={p.id} product={p} badge="NEW" />)}
+            {products.slice(0, 4).map((p: any) => <ProductCard key={p.id} product={p} badge="NEW" />)}
           </div>
         </div>
       </section>
@@ -95,7 +95,7 @@ export default async function Home() {
             <p className="text-gray-500 uppercase tracking-widest text-sm">Our most loved masterpieces</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {products.slice(0, 4).reverse().map(p => <ProductCard key={p.id} product={p} badge="BESTSELLER" />)}
+            {products.slice(0, 4).reverse().map((p: any) => <ProductCard key={p.id} product={p} badge="BESTSELLER" />)}
           </div>
         </div>
       </section>

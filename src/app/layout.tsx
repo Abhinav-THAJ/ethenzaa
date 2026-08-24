@@ -22,7 +22,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const products = await fetchWooCommerceProducts();
-  const uniqueCategories = Array.from(new Set(products.map(p => p.category))).filter(Boolean);
+  const uniqueCategories = Array.from(new Set(products.map((p: any) => p.category))).filter(Boolean) as string[];
   const categories = uniqueCategories.map(cat => ({
     name: cat,
     path: `/products/${cat.toLowerCase().replace(/\s+/g, '-')}`

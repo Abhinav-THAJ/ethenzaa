@@ -15,7 +15,7 @@ export default async function CategoryPage(props: { params: Promise<{ category: 
 
   const allProducts = await fetchWooCommerceProducts();
 
-  const categoryProducts = allProducts.filter(p => p.category.toLowerCase() === categoryName.toLowerCase());
+  const categoryProducts = allProducts.filter((p: any) => p.category.toLowerCase() === categoryName.toLowerCase());
   const displayProducts = categoryProducts.length > 0 ? categoryProducts : allProducts;
 
   return <ShopLayout initialProducts={displayProducts} title={`${categoryName} Collection`} />;
