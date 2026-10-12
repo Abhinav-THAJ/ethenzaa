@@ -5,15 +5,28 @@ import HeroContent from '../components/HeroContent';
 import { fetchWooCommerceProducts } from '../lib/woocommerce';
 import { ArrowRight, Truck, ShieldCheck, RefreshCw, Headphones, Star, Heart } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   const products = await fetchWooCommerceProducts();
   
-  const uniqueCategories = Array.from(new Set(products.map((p: any) => p.category))).filter(Boolean) as string[];
-  const categories = uniqueCategories.map(cat => ({
-    name: cat,
-    image: products.find((p: any) => p.category === cat)?.image || '/images/ethenzaa_women.png',
-    link: `/products/${cat.toLowerCase().replace(/\\s+/g, '-')}`
-  }));
+  const fallbackCategories = [
+    { name: 'Women', image: products[0]?.image || '/images/ethenzaa_women.png', link: '/products/women' },
+    { name: 'Men', image: '/images/ethenzaa_men.png', link: '/products/men' },
+    { name: 'New Arrivals', image: products[1]?.image || '/images/ethenzaa_hero.png', link: '/products/new-arrivals' },
+    { name: 'Offers', image: products[0]?.image || '/images/ethenzaa_women.png', link: '/products/offers' },
+  ];
+
+  const dynamicCategories = Array.from(new Set(products.flatMap((p: any) => p.categories || [p.category])))
+    .filter(Boolean)
+    .filter((cat: string) => cat.toLowerCase() !== 'uncategorized')
+    .map((cat: string) => ({
+      name: cat,
+      image: products.find((p: any) => p.categories?.includes(cat) || p.category === cat)?.image || '/images/ethenzaa_women.png',
+      link: `/products/${cat.toLowerCase().replace(/\s+/g, '-')}`
+    }));
+
+  const categories = dynamicCategories.length >= 2 ? dynamicCategories : fallbackCategories;
 
   const features = [
     { icon: <ShieldCheck size={32} />, title: 'Premium Quality', desc: 'Highest grade fabrics' },
@@ -77,12 +90,12 @@ export default async function Home() {
               <h2 className="font-serif text-4xl text-primary mb-2">New Arrivals</h2>
               <p className="text-gray-500 uppercase tracking-widest text-sm">Fresh off the runway</p>
             </div>
-            <Link href="/products/new-arrivals" className="hidden md:flex items-center gap-2 text-primary hover:text-accent font-semibold uppercase tracking-wider text-sm transition-colors">
+            <Link href="/products" className="hidden md:flex items-center gap-2 text-primary hover:text-accent font-semibold uppercase tracking-wider text-sm transition-colors">
               View All <ArrowRight size={16} />
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {products.slice(0, 4).map((p: any) => <ProductCard key={p.id} product={p} badge="NEW" />)}
+            {products.slice(0, 8).map((p: any) => <ProductCard key={p.id} product={p} badge="NEW" />)}
           </div>
         </div>
       </section>
@@ -95,7 +108,7 @@ export default async function Home() {
             <p className="text-gray-500 uppercase tracking-widest text-sm">Our most loved masterpieces</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {products.slice(0, 4).reverse().map((p: any) => <ProductCard key={p.id} product={p} badge="BESTSELLER" />)}
+            {[...products].reverse().slice(0, 8).map((p: any) => <ProductCard key={p.id} product={p} badge="BESTSELLER" />)}
           </div>
         </div>
       </section>

@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
   title: 'Ethenzaa | Weaving Style. Inspiring Confidence.',
   description: 'Premium Fashion & Lifestyle E-Commerce Brand specializing in ethnic and contemporary fashion for women, men, kids, and plus-size customers.',
   openGraph: {
@@ -22,11 +23,21 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const products = await fetchWooCommerceProducts();
-  const uniqueCategories = Array.from(new Set(products.map((p: any) => p.category))).filter(Boolean) as string[];
-  const categories = uniqueCategories.map(cat => ({
-    name: cat,
-    path: `/products/${cat.toLowerCase().replace(/\s+/g, '-')}`
-  }));
+  const dynamicCategories = Array.from(new Set(products.flatMap((p: any) => p.categories || [p.category])))
+    .filter(Boolean)
+    .filter((cat: string) => cat.toLowerCase() !== 'uncategorized')
+    .map((cat: string) => ({
+      name: cat,
+      path: `/products/${cat.toLowerCase().replace(/\s+/g, '-')}`
+    }));
+
+  const defaultCategories = [
+    { name: 'Women', path: '/products/women' },
+    { name: 'Men', path: '/products/men' },
+    { name: 'Shop All', path: '/products' },
+  ];
+
+  const categories = dynamicCategories.length > 0 ? dynamicCategories : defaultCategories;
 
   return (
     <html lang="en">

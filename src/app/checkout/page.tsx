@@ -10,6 +10,17 @@ export default function Checkout() {
   const { cart, cartTotal, clearCart } = useCart();
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    address: ''
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   
   const shippingFee = cartTotal > 0 && cartTotal < 999 ? 99 : 0;
   const finalAmount = cartTotal + shippingFee;
@@ -41,7 +52,22 @@ export default function Checkout() {
         name: "Ethenzaa",
         description: `Purchase of ${cart.length} items`,
         order_id: order.id,
-        handler: function (response: any) {
+        handler: async function (response: any) {
+            try {
+              await fetch('/api/orders', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  ...formData,
+                  cart,
+                  cartTotal: finalAmount,
+                  paymentId: response.razorpay_payment_id,
+                  orderId: response.razorpay_order_id
+                })
+              });
+            } catch (err) {
+              console.error("Failed to save order to WooCommerce", err);
+            }
             setIsProcessing(false);
             setIsSuccess(true);
             clearCart();
@@ -99,27 +125,27 @@ export default function Checkout() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
-                <input type="text" className="w-full border border-gray-300 rounded-sm p-3 focus:ring-primary focus:border-primary outline-none" required />
+                <input type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} className="w-full border border-gray-300 rounded-sm p-3 focus:ring-primary focus:border-primary outline-none" required />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
-                <input type="text" className="w-full border border-gray-300 rounded-sm p-3 focus:ring-primary focus:border-primary outline-none" required />
+                <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} className="w-full border border-gray-300 rounded-sm p-3 focus:ring-primary focus:border-primary outline-none" required />
               </div>
             </div>
             
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-              <input type="email" className="w-full border border-gray-300 rounded-sm p-3 focus:ring-primary focus:border-primary outline-none" required />
+              <input type="email" name="email" value={formData.email} onChange={handleInputChange} className="w-full border border-gray-300 rounded-sm p-3 focus:ring-primary focus:border-primary outline-none" required />
             </div>
             
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-              <input type="tel" className="w-full border border-gray-300 rounded-sm p-3 focus:ring-primary focus:border-primary outline-none" required />
+              <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} className="w-full border border-gray-300 rounded-sm p-3 focus:ring-primary focus:border-primary outline-none" required />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Complete Shipping Address</label>
-              <textarea className="w-full border border-gray-300 rounded-sm p-3 focus:ring-primary focus:border-primary outline-none" rows={3} required></textarea>
+              <textarea name="address" value={formData.address} onChange={handleInputChange} className="w-full border border-gray-300 rounded-sm p-3 focus:ring-primary focus:border-primary outline-none" rows={3} required></textarea>
             </div>
             
             <div className="mt-10 mb-6 p-4 bg-bg-secondary rounded-sm border border-gray-200">

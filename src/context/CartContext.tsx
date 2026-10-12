@@ -8,6 +8,13 @@ export type Product = {
   price: number;
   image: string;
   category: string;
+  slug?: string;
+  oldPrice?: number;
+  regularPrice?: number;
+  salePrice?: number;
+  onSale?: boolean;
+  stockStatus?: string;
+  inStock?: boolean;
 };
 
 export type CartItem = Product & { quantity: number };
