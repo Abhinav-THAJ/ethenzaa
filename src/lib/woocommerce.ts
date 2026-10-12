@@ -97,13 +97,15 @@ export async function fetchWooCommerceProducts() {
   try {
     const authString = Buffer.from(`${WC_CONSUMER_KEY}:${WC_CONSUMER_SECRET}`).toString('base64');
     
-    // Fetch up to 100 published products with no-store cache so additions in WordPress reflect immediately
-    const url = `${WC_URL.replace(/\/$/, '')}/wp-json/wc/v3/products?status=publish&per_page=100`;
+    // Fetch up to 100 published products. Include both query params and basic auth because Hostinger LiteSpeed CDN strips Authorization headers on cloud/proxy requests
+    const queryAuth = `consumer_key=${encodeURIComponent(WC_CONSUMER_KEY)}&consumer_secret=${encodeURIComponent(WC_CONSUMER_SECRET)}`;
+    const url = `${WC_URL.replace(/\/$/, '')}/wp-json/wc/v3/products?status=publish&per_page=100&${queryAuth}`;
     
     const response = await fetch(url, {
       headers: {
         'Authorization': `Basic ${authString}`,
         'Content-Type': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Ethenzaa/1.0',
       },
       next: { revalidate: 10 }
     });
@@ -141,15 +143,19 @@ export async function fetchWooCommerceProduct(idOrSlug: string) {
     const authString = Buffer.from(`${WC_CONSUMER_KEY}:${WC_CONSUMER_SECRET}`).toString('base64');
     const baseUrl = WC_URL.replace(/\/$/, '');
     const cleanParam = decodeURIComponent(idOrSlug).trim();
+    const queryAuth = `consumer_key=${encodeURIComponent(WC_CONSUMER_KEY)}&consumer_secret=${encodeURIComponent(WC_CONSUMER_SECRET)}`;
+
+    const reqHeaders = {
+      'Authorization': `Basic ${authString}`,
+      'Content-Type': 'application/json',
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Ethenzaa/1.0',
+    };
 
     // 1. If param is numeric, try direct ID endpoint
     if (/^\d+$/.test(cleanParam)) {
-      const idUrl = `${baseUrl}/wp-json/wc/v3/products/${cleanParam}`;
+      const idUrl = `${baseUrl}/wp-json/wc/v3/products/${cleanParam}?${queryAuth}`;
       const response = await fetch(idUrl, {
-        headers: {
-          'Authorization': `Basic ${authString}`,
-          'Content-Type': 'application/json',
-        },
+        headers: reqHeaders,
         next: { revalidate: 10 }
       });
 
@@ -160,12 +166,9 @@ export async function fetchWooCommerceProduct(idOrSlug: string) {
     }
 
     // 2. Query by slug
-    const slugUrl = `${baseUrl}/wp-json/wc/v3/products?slug=${encodeURIComponent(cleanParam)}`;
+    const slugUrl = `${baseUrl}/wp-json/wc/v3/products?slug=${encodeURIComponent(cleanParam)}&${queryAuth}`;
     const slugResponse = await fetch(slugUrl, {
-      headers: {
-        'Authorization': `Basic ${authString}`,
-        'Content-Type': 'application/json',
-      },
+      headers: reqHeaders,
       next: { revalidate: 10 }
     });
 

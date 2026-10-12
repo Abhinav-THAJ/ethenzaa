@@ -50,13 +50,15 @@ export async function POST(req: Request) {
       customer_note: `Razorpay Order ID: ${orderId}`
     };
 
-    const url = `${WC_URL.replace(/\/$/, '')}/wp-json/wc/v3/orders`;
+    const queryAuth = `consumer_key=${encodeURIComponent(WC_CONSUMER_KEY)}&consumer_secret=${encodeURIComponent(WC_CONSUMER_SECRET)}`;
+    const url = `${WC_URL.replace(/\/$/, '')}/wp-json/wc/v3/orders?${queryAuth}`;
 
     const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Authorization': `Basic ${authString}`,
         'Content-Type': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Ethenzaa/1.0',
       },
       body: JSON.stringify(orderData)
     });
