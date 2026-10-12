@@ -4,9 +4,9 @@ export async function POST(req: Request) {
   try {
     const { firstName, lastName, email, phone, address, cart, cartTotal, paymentId, orderId } = await req.json();
 
-    const WC_URL = process.env.NEXT_PUBLIC_WC_URL;
-    const WC_CONSUMER_KEY = process.env.WC_CONSUMER_KEY;
-    const WC_CONSUMER_SECRET = process.env.WC_CONSUMER_SECRET;
+    const WC_URL = process.env.NEXT_PUBLIC_WC_URL || 'https://mediumturquoise-antelope-172097.hostingersite.com/';
+    const WC_CONSUMER_KEY = process.env.WC_CONSUMER_KEY || 'ck_7bd2b0c7852b64c7374680ff72e3fd47d2d329f3';
+    const WC_CONSUMER_SECRET = process.env.WC_CONSUMER_SECRET || 'cs_bbd5bfeea3d72be10e8fbc13069a2ecf2cac2c79';
 
     if (!WC_URL || !WC_CONSUMER_KEY || !WC_CONSUMER_SECRET) {
       return NextResponse.json({ error: 'WooCommerce credentials missing' }, { status: 500 });

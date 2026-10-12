@@ -5,7 +5,10 @@ export async function POST(req: Request) {
   try {
     const { amount, currency = 'INR', receipt = 'receipt#1' } = await req.json();
 
-    if (!process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+    const keyId = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_live_TjLLrDE8QUNCsN';
+    const keySecret = process.env.RAZORPAY_KEY_SECRET || 'ktdfmMvthP2aLlpLLUmOFswi';
+
+    if (!keyId || !keySecret) {
       return NextResponse.json({ error: 'Razorpay keys are not configured' }, { status: 500 });
     }
 
@@ -15,8 +18,8 @@ export async function POST(req: Request) {
 
     // Instantiate inside handler so it only runs at request time, not at build time
     const razorpay = new Razorpay({
-      key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-      key_secret: process.env.RAZORPAY_KEY_SECRET,
+      key_id: keyId,
+      key_secret: keySecret,
     });
 
     const options = {

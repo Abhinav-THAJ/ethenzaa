@@ -80,10 +80,14 @@ function transformProduct(product: any) {
   };
 }
 
+const DEFAULT_WC_URL = 'https://mediumturquoise-antelope-172097.hostingersite.com/';
+const DEFAULT_WC_KEY = 'ck_7bd2b0c7852b64c7374680ff72e3fd47d2d329f3';
+const DEFAULT_WC_SECRET = 'cs_bbd5bfeea3d72be10e8fbc13069a2ecf2cac2c79';
+
 export async function fetchWooCommerceProducts() {
-  const WC_URL = process.env.NEXT_PUBLIC_WC_URL;
-  const WC_CONSUMER_KEY = process.env.WC_CONSUMER_KEY;
-  const WC_CONSUMER_SECRET = process.env.WC_CONSUMER_SECRET;
+  const WC_URL = process.env.NEXT_PUBLIC_WC_URL || DEFAULT_WC_URL;
+  const WC_CONSUMER_KEY = process.env.WC_CONSUMER_KEY || DEFAULT_WC_KEY;
+  const WC_CONSUMER_SECRET = process.env.WC_CONSUMER_SECRET || DEFAULT_WC_SECRET;
 
   if (!WC_URL || !WC_CONSUMER_KEY || !WC_CONSUMER_SECRET) {
     console.warn("WooCommerce environment variables are not set.");
@@ -125,9 +129,9 @@ export async function fetchWooCommerceProducts() {
 }
 
 export async function fetchWooCommerceProduct(idOrSlug: string) {
-  const WC_URL = process.env.NEXT_PUBLIC_WC_URL;
-  const WC_CONSUMER_KEY = process.env.WC_CONSUMER_KEY;
-  const WC_CONSUMER_SECRET = process.env.WC_CONSUMER_SECRET;
+  const WC_URL = process.env.NEXT_PUBLIC_WC_URL || DEFAULT_WC_URL;
+  const WC_CONSUMER_KEY = process.env.WC_CONSUMER_KEY || DEFAULT_WC_KEY;
+  const WC_CONSUMER_SECRET = process.env.WC_CONSUMER_SECRET || DEFAULT_WC_SECRET;
 
   if (!WC_URL || !WC_CONSUMER_KEY || !WC_CONSUMER_SECRET || !idOrSlug) {
     return null;
